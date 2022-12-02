@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tmdbb/provider/film1_provider.dart';
+import 'package:tmdbb/provider/film2_provider.dart';
 
 class Pageone extends StatefulWidget {
   const Pageone({super.key});
@@ -16,6 +19,16 @@ class Pageone extends StatefulWidget {
 }
 
 class _PageoneState extends State<Pageone> {
+  @override 
+  Film1Provider? movieProvider;
+  Film2Provider? movie2Provider;
+  void initState(){
+    movieProvider=Provider.of<Film1Provider>(context,listen:false);
+    movieProvider!.getFilm1Data(context);
+
+    movie2Provider=Provider.of<Film2Provider>(context,listen:false);
+    movie2Provider!.getFilm2Data(context);
+  }
   final _textController=TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -120,35 +133,42 @@ class _PageoneState extends State<Pageone> {
 SizedBox(height: 4.h,),
                        Padding(
                          padding: const EdgeInsets.only(right:8,left:8),
-                         child: Container(
-                    width: double.infinity,
-                    height:25.h,
-                    //color:Colors.red,
-                    child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            //color: Colors.amber,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                     // color:Colors.yellow,
-                                      image: DecorationImage(image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover)
-                                  ),
-                                  width:35.w,
-                                  height: 23.h,
-                                  
-                                  
-                                )
-                              ],
-                            ),
-                          );
-                      },
-                      )
-                  ),
+                         child: Consumer(
+                          builder:(context, Film1Provider a1, child) => a1.isLoading==true?CircularProgressIndicator():
+                           //child: 
+                           Container(
+                                             width: double.infinity,
+                                             height:25.h,
+                                            // color:Colors.red,
+                                             child: ListView.builder(
+                                               itemCount: a1.response.results!.length,
+                                               scrollDirection: Axis.horizontal,
+                                               itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.amber,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                       // color:Colors.yellow,
+                                        image: DecorationImage(
+                                          //image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover
+                                          image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a1.response.results![index].posterPath}"),fit: BoxFit.cover
+                                          )
+                                    ),
+                                    width:35.w,
+                                    height: 23.h,
+                                    
+                                    
+                                  )
+                                ],
+                              ),
+                            );
+                                               },
+                                               )
+                                           ),
+                         ),
                        ),
                     SizedBox(height: 3.h,) , 
                   Padding(
@@ -163,35 +183,42 @@ SizedBox(height: 4.h,),
 
                     Padding(
                          padding: const EdgeInsets.only(right:8,left:8),
-                         child: Container(
-                    width: double.infinity,
-                    height:25.h,
-                    //color:Colors.red,
-                    child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            //color: Colors.amber,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color:Colors.yellow,
-                                      image: DecorationImage(image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover)
-                                  ),
-                                  width:35.w,
-                                  height: 23.h,
-                                  
-                                  
-                                )
-                              ],
-                            ),
-                          );
-                      },
-                      )
-                  ),
+                         child: Consumer(
+                          builder:(context, Film2Provider a2, child) => a2.isLoading==true?CircularProgressIndicator():
+                           //child: 
+                           Container(
+                                             width: double.infinity,
+                                             height:25.h,
+                                             //color:Colors.red,
+                                             child: ListView.builder(
+                                               itemCount: a2.response.results!.length,
+                                               scrollDirection: Axis.horizontal,
+                                               itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.amber,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color:Colors.yellow,
+                                        image: DecorationImage(
+                                         // image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover
+                                         image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a2.response.results![index].posterPath}"),fit: BoxFit.cover
+                                          )
+                                    ),
+                                    width:35.w,
+                                    height: 23.h,
+                                    
+                                    
+                                  )
+                                ],
+                              ),
+                            );
+                                               },
+                                               )
+                                           ),
+                         ),
                        ),
                   
                 ],

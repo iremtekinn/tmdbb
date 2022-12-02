@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tmdbb/pageone.dart';
 import 'package:tmdbb/pagetwo.dart';
+import 'package:tmdbb/provider/film1_provider.dart';
+import 'package:tmdbb/provider/film2_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<Film1Provider>(create:(_)=>Film1Provider()),
+    ChangeNotifierProvider<Film2Provider>(create:(_)=>Film2Provider()),
+  ],
+    child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +37,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Pagetwo(),
+      home: const Pageone(),
     );
     });
     
