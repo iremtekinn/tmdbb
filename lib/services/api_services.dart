@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../models/film1_response.dart';
 import '../models/film2_response.dart';
+import '../models/get_movie_model.dart';
  
 //https://developers.themoviedb.org/3/movies/get-popular-movies
 //pageone 1.film listesi
@@ -36,5 +37,24 @@ Future<Film2Response?> getCurrent2Data() async {
     filmResponse = Film2Response.fromJson(response.data);
     print(response.data);
     return filmResponse;
+  } catch (e) {}
+}
+
+
+//https://developers.themoviedb.org/3/movies/get-movie-details
+//1.sayfadaki 1.listview deki resimlerden birine tıklayınca 2.sayfaya geçişi sağlıyor
+final Dio _dio3 = Dio(BaseOptions(
+  baseUrl: "https://api.themoviedb.org/3/movie/",
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<GetMovieModel?> getCurrentGetMovieData({required String? movie_id}) async {
+  GetMovieModel getMovieResponse;
+  try {
+    final response = await _dio3.get(
+        "$movie_id?api_key=90f4e503d2ae67affe23a46f2a5bfb2f");
+    getMovieResponse = GetMovieModel.fromJson(response.data);
+    print(response.data);
+    return getMovieResponse;
   } catch (e) {}
 }

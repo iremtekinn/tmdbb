@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tmdbb/pagetwo.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/film2_provider.dart';
 
@@ -149,18 +150,23 @@ SizedBox(height: 4.h,),
                               //color: Colors.amber,
                               child: Row(
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                       // color:Colors.yellow,
-                                        image: DecorationImage(
-                                          //image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover
-                                          image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a1.response.results![index].posterPath}"),fit: BoxFit.cover
-                                          )
+                                  GestureDetector(//1.sayfadaki 1.listview deki resimlerden birine tıklayınca 2.sayfaya geçişi sağlıyor
+                                    onTap:(){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Pagetwo(movie_id:'${a1.response.results![index].id}',index:index),),);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                         // color:Colors.yellow,
+                                          image: DecorationImage(
+                                            //image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover
+                                            image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a1.response.results![index].posterPath}"),fit: BoxFit.cover
+                                            )
+                                      ),
+                                      width:35.w,
+                                      height: 23.h,
+                                      
+                                      
                                     ),
-                                    width:35.w,
-                                    height: 23.h,
-                                    
-                                    
                                   )
                                 ],
                               ),

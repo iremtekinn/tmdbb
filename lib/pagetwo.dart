@@ -12,17 +12,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tmdbb/pageone.dart';
+import 'package:tmdbb/provider/film1_provider.dart';
+import 'package:tmdbb/provider/tmdb_provider.dart';
 
 class Pagetwo extends StatefulWidget {
-  const Pagetwo({super.key});
+  const Pagetwo({super.key, required this.movie_id, required this.index});
+  final String movie_id;
+  final int index;
 
   @override
   State<Pagetwo> createState() => _PagetwoState();
 }
 
 class _PagetwoState extends State<Pagetwo> {
+  @override 
+  void initState(){
+   // Provider.of<TMDBProvider>(context,listen:false).getGetMovieData(movie_id:widget.movie_id,index:widget.index);
+    Film1Provider? movieProvider;
+    movieProvider=Provider.of<Film1Provider>(context,listen:false);
+    movieProvider!.getFilm1Data(context);
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,85 +44,94 @@ class _PagetwoState extends State<Pagetwo> {
         
         child: Column(
           children: [
-           Container(
-            width:double.infinity,
-           height: 55.h,
-           
-           decoration: BoxDecoration(
-            color: Colors.yellow,
-            image: DecorationImage(image: AssetImage("assets/twofilm.png"),fit:BoxFit.cover)
-           ),
-           
-           child: Stack(
-            children: [
-              Positioned(
-                top:5.sp,left:13.sp,
-                child:Container(
-                  width: 38.w,
-                  height: 10.h,
-                  //color: Colors.red,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap:() {
-                          Navigator.push(context,MaterialPageRoute(builder: ((context) => Pageone())) );
-                        },
-                        child: Icon(Icons.arrow_back,color: Colors.white,)),
-                      Text("Voltar",style: TextStyle(color:Colors.white,fontSize: 15.sp),)
-                    ],
+           Consumer(
+            builder: (context, Film1Provider a3, child) =>a3.isLoading==true?CircularProgressIndicator():
+             //child:
+              Container(
+              width:double.infinity,
+             height: 55.h,
+             
+             decoration: BoxDecoration(
+              color: Colors.yellow,
+             //image: DecorationImage(image: AssetImage("assets/twofilm.png"),fit:BoxFit.cover)
+             image: DecorationImage(//1.sayfadki listview deki bir rrsme tıklayınca 2.sayfada bu resim karşımıza çıkıyor
+              image:  NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a3.response.results![widget.index].posterPath}",),
+              fit:BoxFit.cover
+              )
+             
+             ),
+             
+             child: Stack(
+              children: [
+                Positioned(
+                  top:5.sp,left:13.sp,
+                  child:Container(
+                    width: 38.w,
+                    height: 10.h,
+                    //color: Colors.red,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap:() {
+                            Navigator.push(context,MaterialPageRoute(builder: ((context) => Pageone())) );
+                          },
+                          child: Icon(Icons.arrow_back,color: Colors.white,)),
+                        Text("Voltar",style: TextStyle(color:Colors.white,fontSize: 15.sp),)
+                      ],
+                    ),
+                  )),
+                 
+                  Positioned(
+                  top:20.sp,right:28.sp,
+                  child:Container(
+                    child: Icon(Icons.favorite_border,color: Colors.white,),
+                    decoration: BoxDecoration(
+                        color: Color(0xff303243),
+                        borderRadius: BorderRadius.circular(30)
+                    ),
+                    width: 10.w,
+                    height: 5.h,
+                    
+                  )),
+                  Positioned(
+                    bottom:10.0.sp,left:0.sp,child: CircularPercentIndicator(
+                  radius: 40.0,
+                  //animation: true,
+                  animationDuration: 1200,
+                  lineWidth: 8.0,
+                  percent: 0.4,
+                  center: new Text(
+                    "40 %",
+                    style:
+                        new TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 14.sp),
                   ),
-                )),
-               
-                Positioned(
-                top:20.sp,right:28.sp,
-                child:Container(
-                  child: Icon(Icons.favorite_border,color: Colors.white,),
-                  decoration: BoxDecoration(
-                      color: Color(0xff303243),
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  width: 10.w,
-                  height: 5.h,
-                  
-                )),
-                Positioned(
-                  bottom:10.0.sp,left:0.sp,child: CircularPercentIndicator(
-                radius: 40.0,
-                //animation: true,
-                animationDuration: 1200,
-                lineWidth: 8.0,
-                percent: 0.4,
-                center: new Text(
-                  "40 %",
-                  style:
-                      new TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 14.sp),
-                ),
-                circularStrokeCap: CircularStrokeCap.butt,
-                backgroundColor: Color(0xff21222E),
-                progressColor: Colors.pink,
-              ),),
-                Positioned(
-                  bottom:40.sp,left: 70.sp,
-                   child:Text("Imperdovel",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
-                   Positioned(
-                  bottom:40.sp,right: 65.sp,
-                   child:Text("(2021)",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
-                   Positioned(
-                  bottom:25.sp,left: 70.sp,
-                   child:Text("10/12/2021",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
-                   Positioned(
-                  bottom:25.sp,right: 140.sp,
-                   child:Text("(BR)",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
-                   Positioned(
-                  bottom:24.sp,right: 120.sp,
-                   child:Icon(Icons.access_time_outlined,color: Color(0xffBBBBBB),)),
-                   Positioned(
-                  bottom:25.sp,right: 80.sp,
-                   child:Text("1h 53m",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
-                   
-
-            ],
-           )
+                  circularStrokeCap: CircularStrokeCap.butt,
+                  backgroundColor: Color(0xff21222E),
+                  progressColor: Colors.pink,
+                ),),
+                  Positioned(
+                    bottom:40.sp,left: 70.sp,
+                     child:Text("Imperdovel",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
+                     Positioned(
+                    bottom:40.sp,right: 65.sp,
+                     child:Text("(2021)",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
+                     Positioned(
+                    bottom:25.sp,left: 70.sp,
+                     child:Text("10/12/2021",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
+                     Positioned(
+                    bottom:25.sp,right: 140.sp,
+                     child:Text("(BR)",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
+                     Positioned(
+                    bottom:24.sp,right: 120.sp,
+                     child:Icon(Icons.access_time_outlined,color: Color(0xffBBBBBB),)),
+                     Positioned(
+                    bottom:25.sp,right: 80.sp,
+                     child:Text("1h 53m",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
+                     
+           
+              ],
+             )
+             ),
            ),
            Padding(
              padding: const EdgeInsets.only(right: 16,left:16,top:16),
