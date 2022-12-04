@@ -101,7 +101,8 @@ class _PagetwoState extends State<Pagetwo> {
                   lineWidth: 8.0,
                   percent: 0.4,
                   center: new Text(
-                    "40 %",
+                   // "40 %",
+                  "${(a3.response!.results![widget.index].voteAverage*10).toString()}",
                     style:
                         new TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 14.sp),
                   ),
@@ -111,22 +112,32 @@ class _PagetwoState extends State<Pagetwo> {
                 ),),
                   Positioned(
                     bottom:40.sp,left: 70.sp,
-                     child:Text("Imperdovel",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
-                     Positioned(
-                    bottom:40.sp,right: 65.sp,
-                     child:Text("(2021)",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) ),
+                     //child:Text("Imperdovel",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) 
+                     child:Text(a3.response.results![widget.index].originalTitle!.toString(),style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),)
+                     ),
+                    // Positioned(
+                   // bottom:40.sp,right: 15.sp,
+                    // child:Text("(2021)",style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) 
+                    //child:Text(a3.response!.results![widget.index].releaseDate!.toString(),style: TextStyle(color:Colors.white,fontSize: 20.sp,fontWeight: FontWeight.bold),) 
+                    // ),
                      Positioned(
                     bottom:25.sp,left: 70.sp,
-                     child:Text("10/12/2021",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
+                     //child:Text("10/12/2021",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                     child:Text(a3.response!.results![widget.index].releaseDate!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                     ),
                      Positioned(
                     bottom:25.sp,right: 140.sp,
-                     child:Text("(BR)",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
-                     Positioned(
-                    bottom:24.sp,right: 120.sp,
-                     child:Icon(Icons.access_time_outlined,color: Color(0xffBBBBBB),)),
-                     Positioned(
-                    bottom:25.sp,right: 80.sp,
-                     child:Text("1h 53m",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) ),
+                    // child:Text("(BR)",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                    child:Text(a3.response!.results![widget.index].originalLanguage!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                     ),
+                    // Positioned(
+                    //bottom:24.sp,right: 120.sp,
+                    // child:Icon(Icons.access_time_outlined,color: Color(0xffBBBBBB),)),
+                     //Positioned(
+                   // bottom:25.sp,right: 80.sp,
+                     //child:Text("1h 53m",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),)
+                     
+                    // ),
                      
            
               ],
@@ -140,8 +151,15 @@ class _PagetwoState extends State<Pagetwo> {
              color: Color(0xff21222E),
              child: Column(
               children: [
-                Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp),"dhfuhıgıthıjhıtjhıtjjdfhfjırhgjfhngvjvnfjnvjfnhfrhıehıfıhfwrehethjfepgıjrıj"),
-                SizedBox(height: 15.h,),
+                Consumer(
+                  builder: (context, Film1Provider a3, child) =>a3.isLoading==true?CircularProgressIndicator():
+                  //child:
+                   //Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp),"dhfuhıgıthıjhıtjhıtjjdfhfjırhgjfhngvjvnfjnvjfnhfrhıehıfıhfwrehethjfepgıjrıj")
+                   Container(height: 20.h,width:98.w,
+                   color:Color(0xff21222E),
+                    child: Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp,),a3.response!.results![widget.index].overview.toString()))
+                   ),
+                SizedBox(height: 4.h,),
                 Container(
                   
                   decoration: BoxDecoration(
@@ -172,34 +190,41 @@ class _PagetwoState extends State<Pagetwo> {
                   color: Colors.blue,
                   child: Text("Elenco principal",style:TextStyle(color: Colors.white,fontSize: 15.sp,fontWeight: FontWeight.bold),),
                 ),
-                Container(
-                  color: Colors.grey,
-                  width: double.infinity,
-                  height: 15.h,
-                  child: ListView.builder(
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right:2,top:10),
-                            child: Container(
-                              width:18.w,
-                              height: 8.h,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Color(0xff303243),width: 4),
-                                borderRadius: BorderRadius.circular(40),
-                              //color: Colors.pink,
-                              image: DecorationImage(image: AssetImage("assets/oneman.png",),fit: BoxFit.cover)
+                Consumer(
+                   builder: (context, Film1Provider a3, child) =>a3.isLoading==true?CircularProgressIndicator():
+                 // child:
+                   Container(
+                    color: Colors.grey,
+                    width: double.infinity,
+                    height: 15.h,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right:2,top:10),
+                              child: Container(
+                                width:18.w,
+                                height: 8.h,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Color(0xff303243),width: 4),
+                                  borderRadius: BorderRadius.circular(40),
+                                //color: Colors.pink,
+                                image: DecorationImage(
+                                  image: AssetImage("assets/oneman.png",),fit: BoxFit.cover
+                                 
+                                  )
+                                ),
+                                
                               ),
-                              
                             ),
-                          ),
-                          Text("Sandra Bullock",style: TextStyle(color: Colors.white),)
-                        ],
-                      );
-                    },
+                            Text("Sandra Bullock",style: TextStyle(color: Colors.white),)
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: 4.h,),
