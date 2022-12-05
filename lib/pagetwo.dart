@@ -17,12 +17,16 @@ import 'package:sizer/sizer.dart';
 import 'package:tmdbb/pageone.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider.dart';
+import 'package:tmdbb/provider/tmdb_provider2.dart';
 
 class Pagetwo extends StatefulWidget {
-  const Pagetwo({super.key, required this.movie_id, required this.index});
+  const Pagetwo({super.key, required this.movie_id, required this.index, required this.movie_id2, required this.index2});
   final String movie_id;
   final int index;
 
+  final String movie_id2;
+  final int index2;
+  
   @override
   State<Pagetwo> createState() => _PagetwoState();
 }
@@ -34,6 +38,7 @@ class _PagetwoState extends State<Pagetwo> {
     Film1Provider? movieProvider;
     movieProvider=Provider.of<Film1Provider>(context,listen:false);
     movieProvider!.getFilm1Data(context);
+    Provider.of<TMDBProvider2>(context,listen:false).getGetMovieData2(movie_id2:widget.movie_id2,index2:widget.index2);
     
   }
   @override
@@ -187,41 +192,44 @@ class _PagetwoState extends State<Pagetwo> {
                 Container(
                   width: double.infinity,
                   height: 3.h,
-                  color: Colors.blue,
+                  //color: Colors.blue,
                   child: Text("Elenco principal",style:TextStyle(color: Colors.white,fontSize: 15.sp,fontWeight: FontWeight.bold),),
                 ),
                 Consumer(
-                   builder: (context, Film1Provider a3, child) =>a3.isLoading==true?CircularProgressIndicator():
+                   builder: (context, TMDBProvider2 a4, child) =>a4.isGetMovieResponseLoading2==true?CircularProgressIndicator():
                  // child:
                    Container(
-                    color: Colors.grey,
+                    //color: Colors.grey,
                     width: double.infinity,
                     height: 15.h,
                     child: ListView.builder(
-                      itemCount: 5,
+                      itemCount: a4.getmovieResponse2.cast!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right:2,top:10),
-                              child: Container(
-                                width:18.w,
-                                height: 8.h,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xff303243),width: 4),
-                                  borderRadius: BorderRadius.circular(40),
-                                //color: Colors.pink,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/oneman.png",),fit: BoxFit.cover
-                                 
-                                  )
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right:2,top:10),
+                                child: Container(
+                                  width:18.w,
+                                  height: 8.h,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Color(0xff303243),width: 4),
+                                    borderRadius: BorderRadius.circular(40),
+                                  //color: Colors.pink,
+                                  image: DecorationImage(
+                                    //image: AssetImage("assets/oneman.png",),fit: BoxFit.cover
+                                   image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a4.getmovieResponse2.cast![index].profilePath}",),fit: BoxFit.cover
+                                    )
+                                  ),
+                                  
                                 ),
-                                
                               ),
-                            ),
-                            Text("Sandra Bullock",style: TextStyle(color: Colors.white),)
-                          ],
+                              Text(a4.getmovieResponse2.cast![index].name.toString(),style: TextStyle(color: Colors.white),)
+                            ],
+                          ),
                         );
                       },
                     ),

@@ -152,7 +152,7 @@ SizedBox(height: 4.h,),
                                 children: [
                                   GestureDetector(//1.sayfadaki 1.listview deki resimlerden birine tıklayınca 2.sayfaya geçişi sağlıyor
                                     onTap:(){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Pagetwo(movie_id:'${a1.response.results![index].id}',index:index),),);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Pagetwo(movie_id:'${a1.response.results![index].id}',index:index,movie_id2:'${a1.response.results![index].id}',index2:index),),);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../models/film1_response.dart';
 import '../models/film2_response.dart';
 import '../models/get_movie_model.dart';
+import '../models/get_movie_model2.dart';
  
 //https://developers.themoviedb.org/3/movies/get-popular-movies
 //pageone 1.film listesi
@@ -58,3 +59,22 @@ Future<GetMovieModel?> getCurrentGetMovieData({required String? movie_id}) async
     return getMovieResponse;
   } catch (e) {}
 }
+
+//https://developers.themoviedb.org/3/movies/get-movie-credits
+//2.sayfadki oyucu listesi
+final Dio _dio4 = Dio(BaseOptions(
+  baseUrl: "https://api.themoviedb.org/3/movie/",
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<GetMovieModel2?> getCurrentGetMovieData2({required String? movie_id2}) async {
+  GetMovieModel2 getMovieResponse2;
+  try {
+    final response = await _dio4.get(
+        "$movie_id2/credits?api_key=90f4e503d2ae67affe23a46f2a5bfb2f&language=en-US");
+    getMovieResponse2 = GetMovieModel2.fromJson(response.data);
+    print(response.data);
+    return getMovieResponse2;
+  } catch (e) {}
+}
+
