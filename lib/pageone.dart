@@ -63,18 +63,18 @@ class _PageoneState extends State<Pageone> {
                     children: [
                       
                       Text(" O que voce quer assistir hoje?",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
-                      Container(
+                  //     Container(
                         
                        
-                    width:10.w,
-                    height: 5.h,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage("assets/oneman.png",),fit: BoxFit.cover),
-                      border: Border.all(color:Colors.white,width: 2),
-                      color:Colors.red,
-                      borderRadius: BorderRadius.circular(30)
-                      ),
-                  ),
+                  //   width:10.w,
+                  //   height: 5.h,
+                  //   decoration: BoxDecoration(
+                  //     image: DecorationImage(image: AssetImage("assets/oneman.png",),fit: BoxFit.cover),
+                  //     border: Border.all(color:Colors.white,width: 2),
+                  //     color:Colors.red,
+                  //     borderRadius: BorderRadius.circular(30)
+                  //     ),
+                  // ),
                     ],
                   ),
                   Text("  assistir hoje?",style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
@@ -152,7 +152,11 @@ SizedBox(height: 4.h,),
                                 children: [
                                   GestureDetector(//1.sayfadaki 1.listview deki resimlerden birine tıklayınca 2.sayfaya geçişi sağlıyor
                                     onTap:(){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Pagetwo(movie_id:'${a1.response.results![index].id}',index:index,movie_id2:'${a1.response.results![index].id}',index2:index),),);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Pagetwo(
+                                      movie_id:'${a1.response.results![index].id}',index:index,
+                                      movie_id2:'${a1.response.results![index].id}',index2:index,   
+                                      movie_id3:'${a1.response.results![index].id}',index3:index),
+                                      ),);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

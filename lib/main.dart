@@ -7,6 +7,7 @@ import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/film2_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider2.dart';
+import 'package:tmdbb/provider/tmdb_provider3.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -14,6 +15,7 @@ void main() {
     ChangeNotifierProvider<Film2Provider>(create:(_)=>Film2Provider()),
     ChangeNotifierProvider<TMDBProvider>(create:(_)=>TMDBProvider()),
     ChangeNotifierProvider<TMDBProvider2>(create:(_)=>TMDBProvider2()),
+    ChangeNotifierProvider<TMDBProvider3>(create:(_)=>TMDBProvider3()),
   ],
     child: const MyApp()));
 }

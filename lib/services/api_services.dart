@@ -4,6 +4,7 @@ import '../models/film1_response.dart';
 import '../models/film2_response.dart';
 import '../models/get_movie_model.dart';
 import '../models/get_movie_model2.dart';
+import '../models/get_movie_model3.dart';
  
 //https://developers.themoviedb.org/3/movies/get-popular-movies
 //pageone 1.film listesi
@@ -75,6 +76,25 @@ Future<GetMovieModel2?> getCurrentGetMovieData2({required String? movie_id2}) as
     getMovieResponse2 = GetMovieModel2.fromJson(response.data);
     print(response.data);
     return getMovieResponse2;
+  } catch (e) {}
+}
+
+
+//https://developers.themoviedb.org/3/movies/get-movie-recommendations
+//2.sayfa film tavsiye 
+final Dio _dio5 = Dio(BaseOptions(
+  baseUrl: "https://api.themoviedb.org/3/movie/",
+  connectTimeout: 5000,
+  receiveTimeout: 3000,
+));
+Future<GetMovieModel3?> getCurrentGetMovieData3({required String? movie_id3}) async {
+  GetMovieModel3 getMovieResponse3;
+  try {
+    final response = await _dio5.get(
+        "$movie_id3/recommendations?api_key=90f4e503d2ae67affe23a46f2a5bfb2f&language=en-US&page=1");
+    getMovieResponse3 = GetMovieModel3.fromJson(response.data);
+    print(response.data);
+    return getMovieResponse3;
   } catch (e) {}
 }
 

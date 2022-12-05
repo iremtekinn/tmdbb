@@ -20,16 +20,20 @@ import 'package:tmdbb/pageone.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider2.dart';
+import 'package:tmdbb/provider/tmdb_provider3.dart';
 
 import 'models/get_movie_model.dart';
 
 class Pagetwo extends StatefulWidget {
-  const Pagetwo({super.key, required this.movie_id, required this.index, required this.movie_id2, required this.index2});
+ const Pagetwo({super.key, required this.movie_id, required this.index, required this.movie_id2, required this.index2, required this.movie_id3, required this.index3});
   final String movie_id;
   final int index;
 
   final String movie_id2;
   final int index2;
+
+  final String movie_id3;
+  final int index3;
   
   @override
   State<Pagetwo> createState() => _PagetwoState();
@@ -43,6 +47,7 @@ class _PagetwoState extends State<Pagetwo> {
     movieProvider=Provider.of<Film1Provider>(context,listen:false);
     movieProvider.getFilm1Data(context);
     Provider.of<TMDBProvider2>(context,listen:false).getGetMovieData2(movie_id2:widget.movie_id2,index2:widget.index2);
+    Provider.of<TMDBProvider3>(context,listen:false).getGetMovieData3(movie_id3:widget.movie_id3,index3:widget.index3);
     
   }
   @override
@@ -58,7 +63,7 @@ class _PagetwoState extends State<Pagetwo> {
              //child:
               Container(
               width:double.infinity,
-             height: 55.h,
+             height: 65.h,//height eskiden 55.h idi
              
              decoration: BoxDecoration(
               color: Colors.yellow,
@@ -285,39 +290,46 @@ class _PagetwoState extends State<Pagetwo> {
                 Container(
                   width: double.infinity,
                   height: 3.h,
-                  color: Colors.amber,
+                 // color: Colors.amber,
                   child: Text("Recomendaçöes",style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.bold,color: Colors.white)),
                 ),
 
-                Container(
-                    width: double.infinity,
-                    height:25.h,
-                    color:Colors.red,
-                    child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            //color: Colors.amber,
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color:Colors.yellow,
-                                      image: DecorationImage(image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover)
-                                  ),
-                                  width:35.w,
-                                  height: 23.h,
-                                  
-                                  
-                                )
-                              ],
-                            ),
-                          );
-                      },
-                      )
-                  ),
+                Consumer(
+                  builder: (context, TMDBProvider3 a6, child) =>a6.isGetMovieResponseLoading3==true?CircularProgressIndicator():
+                //  child:
+                   Container(
+                      width: double.infinity,
+                      height:25.h,
+                     // color:Colors.red,
+                      child: ListView.builder(
+                        itemCount: a6.getmovieResponse3.results!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.amber,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                       // color:Colors.yellow,
+                                        image: DecorationImage(
+                                          //image: AssetImage("assets/onefilm.png"),fit: BoxFit.cover
+                                          image: NetworkImage("https://image.tmdb.org/t/p/w600_and_h900_bestv2/${a6.getmovieResponse3.results![index].posterPath}"),fit: BoxFit.cover
+                                          )
+                                    ),
+                                    width:35.w,
+                                    height: 23.h,
+                                    
+                                    
+                                  )
+                                ],
+                              ),
+                            );
+                        },
+                        )
+                    ),
+                ),
                
                
               ],
