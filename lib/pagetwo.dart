@@ -6,6 +6,8 @@
 
 
 
+// ignore_for_file: unnecessary_string_interpolations, unnecessary_new
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -18,6 +20,8 @@ import 'package:tmdbb/pageone.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider2.dart';
+
+import 'models/get_movie_model.dart';
 
 class Pagetwo extends StatefulWidget {
   const Pagetwo({super.key, required this.movie_id, required this.index, required this.movie_id2, required this.index2});
@@ -34,10 +38,10 @@ class Pagetwo extends StatefulWidget {
 class _PagetwoState extends State<Pagetwo> {
   @override 
   void initState(){
-   // Provider.of<TMDBProvider>(context,listen:false).getGetMovieData(movie_id:widget.movie_id,index:widget.index);
+   Provider.of<TMDBProvider>(context,listen:false).getGetMovieData(movie_id:widget.movie_id,index:widget.index);
     Film1Provider? movieProvider;
     movieProvider=Provider.of<Film1Provider>(context,listen:false);
-    movieProvider!.getFilm1Data(context);
+    movieProvider.getFilm1Data(context);
     Provider.of<TMDBProvider2>(context,listen:false).getGetMovieData2(movie_id2:widget.movie_id2,index2:widget.index2);
     
   }
@@ -105,9 +109,10 @@ class _PagetwoState extends State<Pagetwo> {
                   animationDuration: 1200,
                   lineWidth: 8.0,
                   percent: 0.4,
+                  // ignore: unnecessary_new
                   center: new Text(
                    // "40 %",
-                  "${(a3.response!.results![widget.index].voteAverage*10).toString()}",
+                  "${(a3.response.results![widget.index].voteAverage*10).toString()}",
                     style:
                         new TextStyle(color:Colors.white,fontWeight: FontWeight.bold, fontSize: 14.sp),
                   ),
@@ -128,12 +133,12 @@ class _PagetwoState extends State<Pagetwo> {
                      Positioned(
                     bottom:25.sp,left: 70.sp,
                      //child:Text("10/12/2021",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
-                     child:Text(a3.response!.results![widget.index].releaseDate!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                     child:Text(a3.response.results![widget.index].releaseDate!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
                      ),
                      Positioned(
                     bottom:25.sp,right: 140.sp,
                     // child:Text("(BR)",style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
-                    child:Text(a3.response!.results![widget.index].originalLanguage!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
+                    child:Text(a3.response.results![widget.index].originalLanguage!.toString(),style: TextStyle(color:Color(0xffBBBBBB),fontSize: 12.sp),) 
                      ),
                     // Positioned(
                     //bottom:24.sp,right: 120.sp,
@@ -162,7 +167,7 @@ class _PagetwoState extends State<Pagetwo> {
                    //Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp),"dhfuhıgıthıjhıtjhıtjjdfhfjırhgjfhngvjvnfjnvjfnhfrhıehıfıhfwrehethjfepgıjrıj")
                    Container(height: 20.h,width:98.w,
                    color:Color(0xff21222E),
-                    child: Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp,),a3.response!.results![widget.index].overview.toString()))
+                    child: Text(style: TextStyle(color:Color(0xffCCCCCC),fontSize: 12.sp,),a3.response.results![widget.index].overview.toString()))
                    ),
                 SizedBox(height: 4.h,),
                 Container(
@@ -239,40 +244,42 @@ class _PagetwoState extends State<Pagetwo> {
                 Container(
                   width: double.infinity,
                   height: 3.h,
-                  color: Colors.pink,
+                 // color: Colors.pink,
                   child: Text("Categoria(s)",style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.bold,color: Colors.white)),
                 ),
                 SizedBox(height: 2.h,),
-                Container(
-                  width: double.infinity,
-                  height: 5.h,
-                  color: Colors.lightBlueAccent,
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                           color: Color(0xff303243),
-                           borderRadius: BorderRadius.circular(15)
-                        ),
-                        width: 21.w,
-                        height: 4.h,
-                        
-                        child: Center(child: Text("Drama",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 13.sp),)),
-                      ),
-                      SizedBox(width: 10.w,),
-                      Container(
-                        decoration: BoxDecoration(
-                           color: Color(0xff303243),
-                           borderRadius: BorderRadius.circular(15)
-                        ),
-                        width: 21.w,
-                        height: 4.h,
-                        
-                        child: Center(child: Text("Thriler",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 13.sp),)),
-                      ),
-                      
-                    ],
-                  )
+                Consumer(
+                  builder: (context, TMDBProvider a5, child) =>a5.isGetMovieResponseLoading==true?CircularProgressIndicator():
+                 // child: 
+                  Container(
+                    width: double.infinity,
+                    height: 5.h,
+                    //color: Colors.lightBlueAccent,
+                    child: ListView.builder(
+                          itemCount: a5.getmovieResponse.genres?.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              //color: Colors.amber,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                   color:Color(0xff303238),
+                                   borderRadius: BorderRadius.circular(30)
+                                    ),
+                                    width:28.w,
+                                    height: 5.h,
+                                    
+                                    child: Center(child: Text(a5.getmovieResponse.genres![index].name.toString(),style: TextStyle(color:Colors.white,fontSize: 14.sp),)),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                          )
+                  ),
                 ),
                 SizedBox(height: 2.h,),
                 Container(
