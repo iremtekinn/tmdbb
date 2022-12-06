@@ -5,6 +5,8 @@ import '../models/film2_response.dart';
 import '../models/get_movie_model.dart';
 import '../models/get_movie_model2.dart';
 import '../models/get_movie_model3.dart';
+//import '../models/get_movie_model4.dart';
+import '../models/search_model.dart';
  
 //https://developers.themoviedb.org/3/movies/get-popular-movies
 //pageone 1.film listesi
@@ -96,5 +98,39 @@ Future<GetMovieModel3?> getCurrentGetMovieData3({required String? movie_id3}) as
     print(response.data);
     return getMovieResponse3;
   } catch (e) {}
+}
+
+
+
+
+
+
+// https://api.themoviedb.org/3/search/movie?api_key=1b258cebbacdf3b382888ffa108d4084&language=en-US&query=10&page=1&include_adult=true
+//movie search
+final Dio _dio7 = Dio(BaseOptions(
+  baseUrl: "https://api.themoviedb.org/3/search/movie",
+));
+Future<SearchModel?> getSearchListService(String query) async {
+  SearchModel searchlist = SearchModel();
+
+
+
+  try {
+    final response = await _dio7.get(
+        "?api_key=1b258cebbacdf3b382888ffa108d4084&language=en-US&query=$query&page=1&include_adult=true");
+    searchlist = SearchModel.fromJson(response.data);
+    print(response.data);
+    // Çalışıp çalışmadığını kontrol ediliyor
+    if (response.statusCode == 200) {
+      print("Search page çalışıyor");
+    } else {
+      print("Search page çalışmıyor.");
+    }
+    return searchlist;
+  } catch (e) {
+    // print(e);
+  }
+
+  return null;
 }
 

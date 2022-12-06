@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tmdbb/pagethree.dart';
 import 'package:tmdbb/pagetwo.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/film2_provider.dart';
@@ -81,7 +82,9 @@ class _PageoneState extends State<Pageone> {
                   Padding(
                     padding: const EdgeInsets.only(right:8,left:8,top:25),
                     child: TextField(
-                      
+                      onTap:() {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Pagethree(),));
+                      },
                       decoration: InputDecoration(
                         
                         hintStyle: TextStyle(color:Colors.white.withOpacity(0.5)),

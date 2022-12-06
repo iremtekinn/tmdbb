@@ -5,17 +5,23 @@ import 'package:tmdbb/pageone.dart';
 import 'package:tmdbb/pagetwo.dart';
 import 'package:tmdbb/provider/film1_provider.dart';
 import 'package:tmdbb/provider/film2_provider.dart';
+import 'package:tmdbb/provider/search_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider.dart';
 import 'package:tmdbb/provider/tmdb_provider2.dart';
 import 'package:tmdbb/provider/tmdb_provider3.dart';
+//import 'package:tmdbb/provider/tmdb_provider4.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
+
     ChangeNotifierProvider<Film1Provider>(create:(_)=>Film1Provider()),
     ChangeNotifierProvider<Film2Provider>(create:(_)=>Film2Provider()),
     ChangeNotifierProvider<TMDBProvider>(create:(_)=>TMDBProvider()),
     ChangeNotifierProvider<TMDBProvider2>(create:(_)=>TMDBProvider2()),
     ChangeNotifierProvider<TMDBProvider3>(create:(_)=>TMDBProvider3()),
+   // ChangeNotifierProvider<TMDBProvider4>(create:(_)=>TMDBProvider4()),
+    ChangeNotifierProvider<SearchProvider>(create:(_)=>SearchProvider()),
+
   ],
     child: const MyApp()));
 }
