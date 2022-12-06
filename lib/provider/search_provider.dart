@@ -8,16 +8,12 @@ class SearchProvider extends ChangeNotifier {
   String query = "Baba";
   bool isSearchLoaded = false;
 
-  getSearchData() async {
+  getSearchData(String query) async {
     isSearchLoaded = false;
     searchlist = (await getSearchListService(query));
     isSearchLoaded = true;
     notifyListeners();
   }
 
-  getQuery(String query3) {
-    query = query3;
-    getSearchData();
-    notifyListeners();
-  }
+
 }

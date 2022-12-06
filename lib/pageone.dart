@@ -21,6 +21,11 @@ class Pageone extends StatefulWidget {
 }
 
 class _PageoneState extends State<Pageone> {
+  List<String>film=[
+    "Filmes",
+    "Series",
+    "Filmes Curtos"
+  ];
   @override 
   Film1Provider? movieProvider;
   Film2Provider? movie2Provider;
@@ -109,7 +114,7 @@ class _PageoneState extends State<Pageone> {
                       height: 7.h,
                      // color:Colors.red,
                       child: ListView.builder(
-                        itemCount: 4,
+                        itemCount: film.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return Container(
@@ -122,10 +127,10 @@ class _PageoneState extends State<Pageone> {
                                  color:Color(0xff8000FF),
                                  borderRadius: BorderRadius.circular(30)
                                   ),
-                                  width:28.w,
+                                  width:30.w,
                                   height: 5.h,
                                   
-                                  child: Center(child: Text("Filmes",style: TextStyle(color:Colors.white.withOpacity(0.5),fontSize: 14.sp),)),
+                                  child: Center(child: Text(film[index],style: TextStyle(color:Colors.white.withOpacity(0.5),fontSize: 14.sp),)),
                                 )
                               ],
                             ),

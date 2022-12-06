@@ -19,10 +19,11 @@ class _PagethreeState extends State<Pagethree> {
   void initState() {
     // Textformfield search list data
     //getSearchListService("g");
-    SearchProvider data;
-    data = Provider.of<SearchProvider>(context, listen: false);
-    data.getSearchData();
-    super.initState();
+    // SearchProvider data;
+    // data = Provider.of<SearchProvider>(context, listen: false);
+    // data.getSearchData();
+    // super.initState();
+    Provider.of<SearchProvider>(context,listen:false).getSearchData("Baba");
   }
     //Provider.of<TMDBProvider4>(context,listen:false).getGetMovieData4();
   
@@ -34,8 +35,9 @@ class _PagethreeState extends State<Pagethree> {
         backgroundColor: Color(0xff36076B),
 
       ),
-      body:Consumer<SearchProvider>(builder: (context, value, child) {
-        return 
+      body:Consumer(
+        builder: (context, SearchProvider serchpv, child) =>serchpv.isSearchLoaded==false?CircularProgressIndicator():
+       // return 
         SingleChildScrollView(
           child: 
           Column(
@@ -46,10 +48,10 @@ class _PagethreeState extends State<Pagethree> {
               TextField(   
                 onChanged: (query) {
                   if (query.isEmpty) {
-                    value.getQuery("Irem");
+                    serchpv.getSearchData("Irem");
                                        
                   }else{
-                    value.getQuery(query);
+                    serchpv.getSearchData(query);
                   }
                 },     
                                  style: TextStyle(color: Colors.white),
@@ -75,11 +77,11 @@ class _PagethreeState extends State<Pagethree> {
                         SizedBox(height: 60.h,
                         width: 100.w,
                         child: ListView.builder(
-                          itemCount: value.searchlist?.results!.length,
+                          itemCount: serchpv.searchlist?.results!.length,
                           itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Text(value.searchlist!.results![index].originalTitle.toString())
+                            child: Text(serchpv.searchlist!.results![index].originalTitle.toString())
                           );
                         },),
                         ),
@@ -89,8 +91,10 @@ class _PagethreeState extends State<Pagethree> {
           )
           ,
         )
-        ;
-      },)
+      )
+      );
+        
+      
       
       
       
@@ -171,6 +175,6 @@ class _PagethreeState extends State<Pagethree> {
           ),
         ),
       ) */
-    );
+    
   }
 }

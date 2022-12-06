@@ -104,8 +104,11 @@ Future<GetMovieModel3?> getCurrentGetMovieData3({required String? movie_id3}) as
 
 
 
-
-// https://api.themoviedb.org/3/search/movie?api_key=1b258cebbacdf3b382888ffa108d4084&language=en-US&query=10&page=1&include_adult=true
+//https://developers.themoviedb.org/3/search/search-movies
+//aşağıdaki api url ini oluşturmak için api key ini girdim sonra query kısmına herhangi bir  yazı ya da rakam yazdım (10)sonra bunu koda dahil ederken
+//10 kısmı sürekli değişeceği için başına '$' işareti koydum ve 10 u silip 'query' adında değişkenimi yazdım.  
+//include_adult= true ?
+// https://api.themoviedb.org/3/search/movie?api_key=1b258cebbacdf3b382888ffa108d4084&language=en-US&query=10&page=1&include_adult=true 
 //movie search
 final Dio _dio7 = Dio(BaseOptions(
   baseUrl: "https://api.themoviedb.org/3/search/movie",
